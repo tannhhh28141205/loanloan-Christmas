@@ -108,6 +108,22 @@
             z-index: 999;
             padding: 10px;
         }
+
+        .badge {
+            display: inline-block;
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #FFD700;
+            color: #FFD700;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            text-shadow: 0 0 10px #FFD700;
+        }
     </style>
 </head>
 
@@ -116,9 +132,10 @@
 
     <!-- UI  -->
     <div id="ui-layer">
-        <!--  -->
+        <div id="status" class="badge">🎄 Giang Sinh An Lanh 🎄</div>
         <div class="guide">
-            🖐 <b>Open:</b> Explode &nbsp;|&nbsp; 🫶 <b>Heart:</b> Love &nbsp;|&nbsp; ✊ <b>Fist:</b> Tree
+            🖐 <b>Open:</b>EXPLODE &nbsp;|&nbsp; 👌 <b>Pinch:</b> PHOTO &nbsp;|&nbsp; 🫶 <b>Heart:</b> Love
+            &nbsp;|&nbsp; ✊ <b>Fist:</b> TREE
         </div>
         <button id="btnStart" onclick="startSystem()">START MAGIC</button>
     </div>
@@ -226,6 +243,7 @@
             createPhotos();
             createDecorations();
             animate();
+
         }
 
         function createParticleSystem(type, count, size) {
@@ -548,7 +566,8 @@
 
                 // --- Hand Logic  ---
                 if (results.multiHandLandmarks.length === 2) {
-                    const h1 = results.multiHandLandmarks[0]; const h2 = results.multiHandLandmarks[1];
+                    const h1 = results.multiHandLandmarks[0];
+                    const h2 = results.multiHandLandmarks[1];
                     const distIndex = Math.hypot(h1[8].x - h2[8].x, h1[8].y - h2[8].y);
                     const distThumb = Math.hypot(h1[4].x - h2[4].x, h1[4].y - h2[4].y);
                     if (distIndex < 0.15 && distThumb < 0.15) {
@@ -563,15 +582,20 @@
                     let openDist = 0; tips.forEach(i => openDist += Math.hypot(lm[i].x - wrist.x, lm[i].y - wrist.y));
                     const avgDist = openDist / 4;
                     const pinchDist = Math.hypot(lm[4].x - lm[8].x, lm[4].y - lm[8].y);
-
-                    if (avgDist < 0.25) {
-                        state = 'TREE';
-                    } else if (pinchDist < 0.05) {
+                    if (pinchDist < 0.05) {
                         state = 'PHOTO';
-                    } else {
+                    }
+
+                    else if (avgDist < 0.25) {
+                        state = 'TREE';
+                    }
+
+                    else {
                         state = 'EXPLODE';
                     }
-                } else {
+                }
+
+                else {
                     state = 'TREE';
                 }
             });
