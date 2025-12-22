@@ -141,8 +141,6 @@
     </div>
 
     <!--  -->
-    <div id="copyright">© by vandiep</div>
-
     <div id="canvas-container"></div>
     <video class="input_video" style="display:none"></video>
     <canvas id="camera-preview"></canvas>
@@ -552,6 +550,7 @@
             const video = document.getElementsByClassName('input_video')[0];
             const canvas = document.getElementById('camera-preview');
             const ctx = canvas.getContext('2d');
+            const statusDiv = document.getElementById('status');
             canvas.width = 240;
             canvas.height = 180;
 
@@ -584,19 +583,23 @@
                     const pinchDist = Math.hypot(lm[4].x - lm[8].x, lm[4].y - lm[8].y);
                     if (pinchDist < 0.05) {
                         state = 'PHOTO';
+                        statusDiv.innerText = "👌 XINH GÁI"; statusDiv.style.color = "#00FFFF";
                     }
 
                     else if (avgDist < 0.25) {
                         state = 'TREE';
+                        statusDiv.innerText = "✊ CÂY THÔNG"; statusDiv.style.color = "#FFD700";
                     }
 
                     else {
                         state = 'EXPLODE';
+                        statusDiv.innerText = "🖐 Ú ÒA"; statusDiv.style.color = "#FFA500";
                     }
                 }
 
                 else {
                     state = 'TREE';
+                    statusDiv.innerText = "🎄 GIÁNG SINH NGU NGỐC 🎄"; statusDiv.style.color = "#FFF";
                 }
             });
 
